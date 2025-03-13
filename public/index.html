@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Tank Warfare</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="loading-screen">
+            <h1>Urban Tank Warfare</h1>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+            <p>Loading...</p>
+        </div>
+    </div>
+    <canvas id="gameCanvas"></canvas>
+    
+    <!-- Third-party libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/GLTFLoader.js"></script>
+    
+    <!-- Game scripts -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
