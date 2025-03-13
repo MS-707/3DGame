@@ -1,125 +1,34 @@
-// Main entry point for the Urban Tank Warfare game
-
-// Import modules
-import { Scene } from './scene.js';
-import { Tank } from './tank.js';
-import { InputManager } from './input.js';
-import { CameraController } from './camera.js';
-import { Constants } from './constants.js';
-
-// Game variables
-let scene;
-let inputManager;
-let tank;
-let cameraController;
-let lastTime = 0;
-let isLoading = true;
-
-// DOM elements
-const loadingScreen = document.getElementById('loading-screen');
-const progressBar = document.querySelector('.progress-bar');
-const gameCanvas = document.getElementById('gameCanvas');
-
 /**
- * Initialize the game
+ * Main entry point for Urban Tank Warfare
  */
-async function init() {
-    // Update loading progress
-    updateLoadingProgress(10, 'Initializing game...');
-    
-    // Initialize input manager first
-    inputManager = new InputManager();
-    updateLoadingProgress(20, 'Controls initialized');
-    
-    // Initialize scene
-    scene = new Scene(gameCanvas);
-    await scene.init();
-    updateLoadingProgress(50, 'Scene loaded');
-    
-    // Create player tank
-    const tankPosition = { x: 0, y: 0.5, z: 0 };
-    tank = new Tank(scene, tankPosition, { x: 0, y: 0, z: 0 });
-    updateLoadingProgress(70, 'Tank created');
-    
-    // Initialize camera controller
-    cameraController = new CameraController(scene.getCamera(), tank);
-    updateLoadingProgress(90, 'Camera configured');
-    
-    // Set up event listeners
-    window.addEventListener('resize', handleResize);
-    
-    // Complete loading
-    setTimeout(() => {
-        loadingScreen.style.opacity = '0';
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-            isLoading = false;
-        }, 500);
-    }, 500);
-    
-    // Start game loop
-    requestAnimationFrame(gameLoop);
-}
 
-/**
- * Main game loop
- */
-function gameLoop(timestamp) {
-    requestAnimationFrame(gameLoop);
-    
-    if (isLoading) return;
-    
-    // Calculate delta time in seconds
-    const deltaTime = (timestamp - lastTime) / 1000;
-    lastTime = timestamp;
-    
-    // Skip large time gaps (e.g., when tab is inactive)
-    if (deltaTime > 0.1) return;
-    
-    // Update game systems
-    inputManager.update();
-    
-    // Process player input
-    if (tank) {
-        tank.handleInput(inputManager);
-        tank.update(deltaTime);
-    }
-    
-    // Update camera
-    if (cameraController) {
-        cameraController.update(deltaTime);
-    }
-    
-    // Update and render scene
-    if (scene) {
-        scene.update(deltaTime);
-    }
-}
+import { Game } from './game.js';
 
-/**
- * Handle window resize
- */
-function handleResize() {
-    if (scene) {
-        scene.resize(window.innerWidth, window.innerHeight);
-    }
+// Initialize game when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Create and initialize game
+    window.game = new Game();
     
-    if (cameraController) {
-        cameraController.handleResize();
-    }
-}
-
-/**
- * Update loading progress bar
- */
-function updateLoadingProgress(percent, message) {
-    progressBar.style.width = `${percent}%`;
+    // Log game controls to console
+    console.log(`
+    Urban Tank Warfare - Controls
+    ----------------------------
+    Movement: WASD
+    Aim: Mouse
+    Fire: Spacebar or Left Mouse Button
     
-    const loadingMessage = document.querySelector('#loading-screen p');
-    if (loadingMessage && message) {
-        loadingMessage.textContent = message;
-    }
-}
-
-// Start the game
-window.addEventListener('DOMContentLoaded', init);
+    Camera Modes:
+    1: Follow Camera
+    2: Overhead Camera
+    3: First Person
+    4: Cinematic Mode
+    
+    Other Controls:
+    F: Toggle Fullscreen
+    V: Toggle FPS Display
+    P/ESC: Pause Game
+    
+    Multiplayer Mode: 
+    Add ?multiplayer to the URL to enable multiplayer mode
+    `);
+});
