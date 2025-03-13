@@ -1,0 +1,40 @@
+{
+  "name": "urban-tank-warfare",
+  "version": "0.1.0",
+  "description": "A 3D multiplayer tank combat game set in a destructible city environment",
+  "main": "src/server/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server/server.js",
+    "dev": "nodemon src/server/server.js",
+    "client": "cd public && python -m http.server 8000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MS-707/3DGame.git"
+  },
+  "keywords": [
+    "game",
+    "tank",
+    "3D",
+    "multiplayer",
+    "threejs"
+  ],
+  "author": "MarkStarrPro",
+  "contributors": [
+    "Claude 3.7 Sonnet",
+    "Qwen2.5-Coder-32B-Instruct"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
